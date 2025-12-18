@@ -58,13 +58,35 @@
 
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center justify-between mb-2">
-                                <h4 class="text-lg font-semibold text-slate-900 truncate pr-4">
-                                    {{ $notification->data['subject'] ?? 'System Notification' }}
-                                </h4>
+                                <div class="flex items-center gap-2">
+                                    <h4 class="text-lg font-semibold text-slate-900 truncate">
+                                        {{ $notification->data['subject'] ?? 'System Notification' }}
+                                    </h4>
+                                    @if (!empty($notification->meta['is_manual']))
+                                        <span
+                                            class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-700 border border-amber-200 uppercase tracking-wide">Manual</span>
+                                    @endif
+                                    @if ($notification->notifiable_type === 'guest')
+                                        <span
+                                            class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-700 border border-purple-200 uppercase tracking-wide">External</span>
+                                    @endif
+                                </div>
                                 <span class="flex-shrink-0 text-xs font-medium text-slate-400 whitespace-nowrap">
                                     {{ $notification->created_at->diffForHumans() }}
                                 </span>
                             </div>
+
+                            @if (!empty($notification->meta['guest_email']))
+                                <div class="mb-3">
+                                    <span
+                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                        <svg class="mr-1.5 h-2 w-2 text-blue-400" fill="currentColor" viewBox="0 0 8 8">
+                                            <circle cx="4" cy="4" r="3" />
+                                        </svg>
+                                        Sent to: {{ $notification->meta['guest_email'] }}
+                                    </span>
+                                </div>
+                            @endif
 
                             <div class="text-slate-600 leading-relaxed text-sm">
                                 {!! nl2br(e($notification->data['content'] ?? '')) !!}

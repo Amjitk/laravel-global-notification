@@ -43,6 +43,8 @@
                     <div class="hidden md:flex space-x-1">
                         <a href="{{ route('notification-types.index') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Configuration</a>
+                        <a href="{{ route('global-notification.notifications.compose') }}"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Compose</a>
                         <a href="{{ route('global-notification.user.index') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">My
                             Notifications</a>

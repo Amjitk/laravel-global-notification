@@ -9,12 +9,13 @@ class NotificationLog extends Model
     protected $table = 'gn_notification_logs';
     
     protected $fillable = [
-        'notifiable_id', 'notifiable_type', 'notification_type_id', 'channel', 'data', 'read_at'
+        'notifiable_id', 'notifiable_type', 'notification_type_id', 'channel', 'data', 'meta', 'read_at'
     ];
     
     protected $casts = [
         'read_at' => 'datetime',
         'data' => 'array',
+        'meta' => 'array',
     ];
 
     public function type()

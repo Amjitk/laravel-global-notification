@@ -16,31 +16,46 @@ class MailChannel implements NotificationChannel
 
         if (method_exists($notifiable, 'routeNotificationForMail')) {
             $email = $notifiable->routeNotificationForMail();
+        } elseif (is_object($notifiable) && isset($notifiable->email)) {
+            $email = $notifiable->email;
+        } elseif (is_string($notifiable)) {
+             $email = $notifiable; // Direct email string
         }
 
-        if (!$email && isset($notifiable->email)) {
-             $email = $notifiable->email;
-        }
-
-        if (!$email) {
+        if (!$email) { // Changed from `if ($email)` to `if (!$email)` to maintain original logic flow of returning if no email is found.
             return;
         }
 
         $content = ContentParser::parse($template->content, $data);
         $subject = ContentParser::parse($template->subject ?? '', $data);
 
-        Mail::raw($content, function($message) use ($email, $subject) {
-            $message->to($email)->subject($subject);
-        });
+        if ($email) {
+            Mail::raw($content, function($message) use ($email, $subject, $data) {
+               $message->to($email)->subject($subject);
+               
+               if (!empty($data['from_email'])) {
+                   $message->from($data['from_email'], $data['from_name'] ?? null);
+               }
+            });
+            
+             $id = ($notifiable instanceof \Illuminate\Database\Eloquent\Model) ? $notifiable->getKey() : 0;
+             $type = ($notifiable instanceof \Illuminate\Database\Eloquent\Model) ? $notifiable->getMorphClass() : 'guest';
 
-        // Log that email was sent
-        NotificationLog::create([
-            'notifiable_id' => $notifiable->getKey(),
-            'notifiable_type' => $notifiable->getMorphClass(),
-            'notification_type_id' => $template->notification_type_id,
-            'channel' => 'mail',
-            'data' => ['subject' => $subject, 'content' => $content],
-            'read_at' => Carbon::now(),
-        ]);
+             NotificationLog::create([
+                'notifiable_id' => $id,
+                'notifiable_type' => $type,
+                'notification_type_id' => $template->notification_type_id ?? null, // Handle null for manual
+                'channel' => 'mail',
+                'data' => [
+                    'subject' => $subject, 
+                    'content' => $content,
+                ],
+                'meta' => [
+                    'is_manual' => $data['is_manual'] ?? false,
+                    'guest_email' => $email 
+                ],
+                'read_at' => \Illuminate\Support\Carbon::now(),
+            ]);
+        }
     }
 }
