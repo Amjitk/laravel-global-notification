@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="resources/img/logo.png" width="200" alt="Global Notification Logo">
+</p>
+
 # Laravel Global Notification
 
 A comprehensive notification system for Laravel applications. This package allows you to manage notification types and templates via a CMS and automatically trigger them based on system events.
