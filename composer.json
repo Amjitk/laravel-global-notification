@@ -1,0 +1,30 @@
+{
+  "name": "amjitk/laravel-global-notification",
+  "description": "A comprehensive notification system for Laravel with CMS and automated triggers.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "AmjitK",
+      "email": "amjithkottayi@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "illuminate/support": "^10.0 || ^11.0 || ^12.0",
+    "illuminate/database": "^10.0 || ^11.0 || ^12.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "AmjitK\\GlobalNotification\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "AmjitK\\GlobalNotification\\GlobalNotificationServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable"
+}
