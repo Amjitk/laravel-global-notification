@@ -18,8 +18,29 @@ class NotificationService
         // Register new channels here
     ];
 
+    protected $source = 'system';
+
+    /**
+     * Set the source for the next notification.
+     * 
+     * @param string $source
+     * @return $this
+     */
+    public function withSource(string $source)
+    {
+        $this->source = $source;
+        return $this;
+    }
+
     public function send(string $typeName, Model $notifiable, array $data = [])
     {
+        // Inject source into data
+        $data['source'] = $this->source;
+
+        // Reset source for next call
+        $currentSource = $this->source;
+        $this->source = 'system';
+
         $type = NotificationType::where('name', $typeName)->first();
         
         if (!$type) {
@@ -47,8 +68,16 @@ class NotificationService
      */
     public function sendManual($notifiable, string $subject, string $content, array $channels, array $data = [])
     {
-        // Tag as manual
+        // Tag as manual (unless overridden by source, but manual is usually explicit)
         $data['is_manual'] = true;
+        
+        // Inject source (if set via withSource)
+        if (!isset($data['source'])) {
+             $data['source'] = $this->source;
+        }
+        
+        // Reset source
+        $this->source = 'system';
 
         foreach ($channels as $channelName) {
             if (isset($this->channels[$channelName])) {

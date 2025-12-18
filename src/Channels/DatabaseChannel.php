@@ -34,6 +34,7 @@ class DatabaseChannel implements NotificationChannel
             'meta' => [
                 'is_manual' => $data['is_manual'] ?? false,
                 'guest_email' => $data['guest_email'] ?? null,
+                'source' => $data['source'] ?? 'system',
             ]
         ]);
     }

@@ -52,8 +52,12 @@ class MailChannel implements NotificationChannel
                 ],
                 'meta' => [
                     'is_manual' => $data['is_manual'] ?? false,
-                    'guest_email' => $email 
+                    'guest_email' => $email,
+                    'source' => $data['source'] ?? 'system',
                 ],
+                // 'read_at' => \Illuminate\Support\Carbon::now(), // Emails are inherently "read" or "delivered" but generic logs usually stay unread until user confirmation.
+                // Actually, logging email sending as 'read_at' => now() is standard for "sent" logs, or null if we track open. 
+                // Using now() for compatibility with previous code.
                 'read_at' => \Illuminate\Support\Carbon::now(),
             ]);
         }
