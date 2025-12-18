@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="flex justify-end mb-4">
-        <a href="{{ route('notification-types.create') }}"
+        <a href="{{ route('global-notification.notification-types.create') }}"
             class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700">Create New Type</a>
     </div>
 
@@ -30,7 +30,7 @@
                         @endforeach
                     </td>
                     <td class="border p-2">
-                        <a href="{{ route('notification-types.show', $type->id) }}"
+                        <a href="{{ route('global-notification.notification-types.show', $type->id) }}"
                             class="text-blue-600 hover:underline">Configure</a>
                     </td>
                 </tr>

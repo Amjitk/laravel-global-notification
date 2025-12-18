@@ -43,7 +43,10 @@ The configuration file `config/global-notification.php` allows you to customize:
 
 - **Channels**: Enabled channels (default: `mail`, `database`).
 - **Route Prefix**: URL prefix for the package routes (default: `global-notification`).
-- **Middleware**: Middleware for admin routes (default: `['web']`).
+- **Middleware**: Middleware for admin routes. Configurable via `.env`:
+  ```env
+  GLOBAL_NOTIFICATION_AUTH_ENABLED=true # Set to false to disable authentication
+  ```
 
 ## Usage
 
@@ -84,10 +87,12 @@ class Order extends Model
 }
 ```
 
-### 3. User - View Notifications
+### 3. Notification Logs
 
-Users can view their notifications at:
-`/global-notification/my-notifications`
+View all system notifications at:
+`/global-notification/logs`
+
+This page displays a global log of all notifications triggered in the system.
 
 ## Testing
 

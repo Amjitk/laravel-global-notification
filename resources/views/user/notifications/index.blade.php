@@ -1,12 +1,12 @@
 @extends('global-notification::layouts.app')
 
-@section('title', 'My Notifications')
+@section('title', 'Notification Logs')
 
 @section('content')
     <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
         <div>
-            <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Notifications</h1>
-            <p class="text-slate-500 mt-1">Manage and view your system alerts.</p>
+            <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Notification Logs</h1>
+            <p class="text-slate-500 mt-1">Monitor all system notifications.</p>
         </div>
 
         <div class="flex p-1 bg-slate-100/50 rounded-xl border border-slate-200">
@@ -18,7 +18,7 @@
                 class="px-5 py-2 text-sm font-semibold rounded-lg transition-all {{ request('read') == 'true' ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">
                 Read
             </a>
-            <a href="{{ route('global-notification.user.index') }}"
+            <a href="{{ route('global-notification.logs.index') }}"
                 class="px-5 py-2 text-sm font-semibold rounded-lg transition-all {{ !request()->has('read') ? 'bg-white shadow-sm text-indigo-600' : 'text-slate-500 hover:text-slate-700' }}">
                 All
             </a>
@@ -94,7 +94,7 @@
 
                             <div class="mt-4 flex items-center gap-4">
                                 @if (is_null($notification->read_at))
-                                    <form action="{{ route('global-notification.user.read', $notification->id) }}"
+                                    <form action="{{ route('global-notification.logs.read', $notification->id) }}"
                                         method="POST">
                                         @csrf
                                         <button type="submit"

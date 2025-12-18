@@ -8,6 +8,11 @@ use AmjitK\GlobalNotification\Models\NotificationTemplate;
 
 class NotificationTemplateController extends Controller
 {
+    public function index()
+    {
+        $templates = NotificationTemplate::with('type')->get();
+        return view('global-notification::admin.templates.index', compact('templates'));
+    }
     public function store(Request $request)
     {
         $request->validate([

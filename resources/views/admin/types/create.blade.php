@@ -3,7 +3,7 @@
 @section('title', 'Create Notification Type')
 
 @section('content')
-    <form action="{{ route('notification-types.store') }}" method="POST" class="max-w-lg">
+    <form action="{{ route('global-notification.notification-types.store') }}" method="POST" class="max-w-lg">
         @csrf
 
         <div class="mb-4">

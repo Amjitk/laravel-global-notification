@@ -9,7 +9,7 @@ use AmjitK\GlobalNotification\Http\Controllers\NotificationTemplateController;
 use AmjitK\GlobalNotification\Http\Controllers\ScheduledNotificationController;
 
 Route::group(['middleware' => Config::get('global-notification.admin_middleware'), 'prefix' => Config::get('global-notification.route_prefix')], function () {
-    
+
     // Scheduled Notifications
     // Scheduled Notifications
     Route::get('/admin/scheduled', [ScheduledNotificationController::class, 'index'])->name('global-notification.notifications.scheduled');
@@ -24,14 +24,14 @@ Route::group(['middleware' => Config::get('global-notification.admin_middleware'
         'update' => 'global-notification.notification-types.update',
         'destroy' => 'global-notification.notification-types.destroy',
     ]);
-    
-    Route::resource('notification-templates', NotificationTemplateController::class)->only(['store', 'update', 'destroy'])->names([
+
+    Route::resource('notification-templates', NotificationTemplateController::class)->names([
         'index' => 'global-notification.notification-templates.index', // Even if only is set, providing names avoids ambiguity
         'store' => 'global-notification.notification-templates.store',
         'update' => 'global-notification.notification-templates.update',
         'destroy' => 'global-notification.notification-templates.destroy',
     ]);
-    
+
     Route::get('/notification-types/{id}', [NotificationConfigController::class, 'show'])->name('notification-types.show');
 
     // Manual / Ad-hoc Notifications
@@ -40,6 +40,6 @@ Route::group(['middleware' => Config::get('global-notification.admin_middleware'
     Route::post('/compose', [NotificationComposeController::class, 'store'])->name('global-notification.notifications.send');
 
     // User Notifications (assuming 'auth' is handled by the app)
-    Route::get('my-notifications', [NotificationLogController::class, 'index'])->name('global-notification.user.index');
-    Route::post('my-notifications/{id}/read', [NotificationLogController::class, 'markAsRead'])->name('global-notification.user.read');
+    Route::get('logs', [NotificationLogController::class, 'index'])->name('global-notification.logs.index');
+    Route::post('logs/{id}/read', [NotificationLogController::class, 'markAsRead'])->name('global-notification.logs.read');
 });

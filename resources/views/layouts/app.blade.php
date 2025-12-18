@@ -31,7 +31,7 @@
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between h-16">
                 <div class="flex items-center gap-8">
-                    <a href="{{ route('notification-types.index') }}"
+                    <a href="{{ route('global-notification.notification-types.index') }}"
                         class="font-bold text-xl tracking-tight text-indigo-600 flex items-center gap-2">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -50,9 +50,8 @@
                         <a href="{{ route('global-notification.notifications.scheduled') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Scheduled
                             Logs</a>
-                        <a href="{{ route('global-notification.user.index') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">My
-                            Notifications</a>
+                        <a href="{{ route('global-notification.logs.index') }}"
+                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Logs</a>
                     </div>
                 </div>
                 <div class="flex items-center">

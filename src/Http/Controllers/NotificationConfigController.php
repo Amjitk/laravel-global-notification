@@ -29,12 +29,13 @@ class NotificationConfigController extends Controller
         ]);
 
         $type = NotificationType::create($request->all());
-        return redirect()->route('notification-types.index')->with('success', 'Notification Type Created');
+        return redirect()->route('global-notification.notification-types.index')->with('success', 'Notification Type Created');
     }
-    
-    public function show($id) {
-         $type = NotificationType::with('templates')->findOrFail($id);
-         return view('global-notification::admin.types.show', compact('type'));
+
+    public function show($id)
+    {
+        $type = NotificationType::with('templates')->findOrFail($id);
+        return view('global-notification::admin.types.show', compact('type'));
     }
 
     // ... handle updates and template management here ...

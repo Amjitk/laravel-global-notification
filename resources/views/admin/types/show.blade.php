@@ -34,7 +34,8 @@
 
     <div class="border-t pt-6">
         <h3 class="text-xl font-bold mb-4">Add/Edit Template</h3>
-        <form action="{{ route('notification-templates.store') }}" method="POST" class="bg-gray-50 p-6 rounded border">
+        <form action="{{ route('global-notification.notification-templates.store') }}" method="POST"
+            class="bg-gray-50 p-6 rounded border">
             @csrf
             <input type="hidden" name="notification_type_id" value="{{ $type->id }}">
 
