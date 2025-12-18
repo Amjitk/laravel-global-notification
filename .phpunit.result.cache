@@ -1,0 +1,1 @@
+{"version":2,"defects":{"Tests\\ManualNotificationTest::test_send_manual_creates_log":8,"Tests\\ManualNotificationTest::test_send_manual_mail_only_for_guest":8},"times":[]}

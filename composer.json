@@ -1,5 +1,6 @@
 {
   "name": "amjitk/laravel-global-notification",
+  "version": "1.1.0",
   "description": "A comprehensive notification system for Laravel with CMS and automated triggers.",
   "type": "library",
   "license": "MIT",
