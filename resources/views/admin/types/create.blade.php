@@ -17,6 +17,14 @@
             <textarea name="description" class="w-full border p-2 rounded" placeholder="Description of when this fires..."></textarea>
         </div>
 
+        <div class="mb-4">
+            <label class="block text-sm font-bold mb-1">Variables</label>
+            <input type="text" name="variables" class="w-full border p-2 rounded"
+                placeholder="order_id, amount, customer_name">
+            <p class="text-xs text-gray-500 mt-1">Comma separated list of variables available in templates (e.g.
+                <code>@{{ order_id }}</code>).</p>
+        </div>
+
         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700">Save Notification
             Type</button>
     </form>

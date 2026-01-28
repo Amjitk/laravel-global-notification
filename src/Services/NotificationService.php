@@ -10,6 +10,8 @@ use AmjitK\GlobalNotification\Channels\DatabaseChannel;
 use AmjitK\GlobalNotification\Channels\MailChannel;
 
 
+use AmjitK\GlobalNotification\Models\UserPreference;
+
 class NotificationService
 {
     protected $channels = [
@@ -42,7 +44,7 @@ class NotificationService
         $this->source = 'system';
 
         $type = NotificationType::where('name', $typeName)->first();
-        
+
         if (!$type) {
             return;
         }
@@ -51,8 +53,12 @@ class NotificationService
 
         foreach ($templates as $template) {
             if (isset($this->channels[$template->channel])) {
-                $channelClass = $this->channels[$template->channel];
-                (new $channelClass)->send($notifiable, $template, $data);
+
+                // Check User Preference
+                if ($this->isChannelEnabled($notifiable, $type->id, $template->channel)) {
+                    $channelClass = $this->channels[$template->channel];
+                    (new $channelClass)->send($notifiable, $template, $data);
+                }
             }
         }
     }
@@ -70,12 +76,12 @@ class NotificationService
     {
         // Tag as manual (unless overridden by source, but manual is usually explicit)
         $data['is_manual'] = true;
-        
+
         // Inject source (if set via withSource)
         if (!isset($data['source'])) {
-             $data['source'] = $this->source;
+            $data['source'] = $this->source;
         }
-        
+
         // Reset source
         $this->source = 'system';
 
@@ -88,12 +94,58 @@ class NotificationService
                 $template->channel = $channelName;
                 $template->subject = $subject;
                 $template->content = $content;
-                $template->notification_type_id = null; 
+                $template->notification_type_id = null;
 
                 $channelClass = $this->channels[$channelName];
                 (new $channelClass)->send($notifiable, $template, $data);
             }
         }
     }
-}
 
+    /**
+     * Check if a channel is enabled for a specific user and notification type.
+     * 
+     * @param mixed $notifiable
+     * @param int $typeId
+     * @param string $channel
+     * @return bool
+     */
+    protected function isChannelEnabled($notifiable, $typeId, $channel)
+    {
+        // Only applicable if notifiable is a Model (e.g. User)
+        if (!($notifiable instanceof Model)) {
+            return true;
+        }
+
+        $preference = UserPreference::where('user_id', $notifiable->getKey())
+            ->where('notification_type_id', $typeId)
+            ->where('channel', $channel)
+            ->first();
+
+        // If no preference record exists, default to true (enabled)
+        if (!$preference) {
+            return true;
+        }
+
+        return $preference->is_enabled;
+    }
+
+    /**
+     * Send a specific template immediately (Helper for testing).
+     */
+    public function sendTemplate($notifiable, $template, array $data = [])
+    {
+        // Inject source
+        if (!isset($data['source'])) {
+            $data['source'] = 'test'; // Default to test source
+        }
+
+        if (isset($this->channels[$template->channel])) {
+            $channelClass = $this->channels[$template->channel];
+            (new $channelClass)->send($notifiable, $template, $data);
+            return true;
+        }
+
+        return false;
+    }
+}

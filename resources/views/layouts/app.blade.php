@@ -42,16 +42,18 @@
                     </a>
                     <div class="hidden md:flex space-x-1">
                         <a href="{{ route('global-notification.notification-types.index') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Configuration</a>
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.notification-types.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Configuration</a>
                         <a href="{{ route('global-notification.notification-templates.index') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Templates</a>
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.notification-templates.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Templates</a>
                         <a href="{{ route('global-notification.notifications.compose') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Compose</a>
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.notifications.compose') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Compose</a>
                         <a href="{{ route('global-notification.notifications.scheduled') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Scheduled
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.notifications.scheduled') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Scheduled
                             Logs</a>
                         <a href="{{ route('global-notification.logs.index') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 transition-all">Logs</a>
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.logs.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Logs</a>
+                        <a href="{{ route('global-notification.preferences.index') }}"
+                            class="px-3 py-2 rounded-md text-sm font-medium transition-all {{ request()->routeIs('global-notification.preferences.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-600 hover:text-indigo-600 hover:bg-indigo-50' }}">Preferences</a>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -87,6 +89,7 @@
         </div>
     </footer>
 
+    @include('global-notification::components.toast')
 </body>
 
 </html>

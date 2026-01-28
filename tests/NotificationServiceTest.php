@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 class NotificationServiceTest extends TestCase
 {
     /** @test */
-    public function it_can_send_a_notification()
+    public function test_it_can_send_a_notification()
     {
         // 1. Create a Type
         $type = NotificationType::create([
@@ -27,19 +27,19 @@ class NotificationServiceTest extends TestCase
             'content' => 'Welcome {{name}} to our platform.',
             'is_active' => true
         ]);
-        
+
         $user = new class extends \Illuminate\Database\Eloquent\Model {
             protected $table = 'users';
             protected $guarded = [];
         };
-        
+
         // Ensure users table exists for this test if needed, or just mock getKey()
-        Schema::create('users', function($table) {
+        Schema::create('users', function ($table) {
             $table->id();
             $table->string('email');
             $table->timestamps();
         });
-        
+
         $user = $user->create(['email' => 'test@example.com']);
 
         // 4. Send Notification
@@ -53,7 +53,7 @@ class NotificationServiceTest extends TestCase
             'data' => json_encode([
                 'subject' => 'Hello John',
                 'content' => 'Welcome John to our platform.',
-                'original_data' => ['name' => 'John']
+                'original_data' => ['name' => 'John', 'source' => 'system']
             ])
         ]);
     }

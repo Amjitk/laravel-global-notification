@@ -32,6 +32,8 @@ Route::group(['middleware' => Config::get('global-notification.admin_middleware'
         'destroy' => 'global-notification.notification-templates.destroy',
     ]);
 
+    Route::post('notifications/{id}/test', [NotificationTemplateController::class, 'test'])->name('global-notification.notifications.test');
+
     Route::get('/notification-types/{id}', [NotificationConfigController::class, 'show'])->name('notification-types.show');
 
     // Manual / Ad-hoc Notifications
@@ -42,4 +44,11 @@ Route::group(['middleware' => Config::get('global-notification.admin_middleware'
     // User Notifications (assuming 'auth' is handled by the app)
     Route::get('logs', [NotificationLogController::class, 'index'])->name('global-notification.logs.index');
     Route::post('logs/{id}/read', [NotificationLogController::class, 'markAsRead'])->name('global-notification.logs.read');
+
+    // User Preferences
+    Route::get('preferences', [AmjitK\GlobalNotification\Http\Controllers\UserPreferenceController::class, 'index'])->name('global-notification.preferences.index');
+    Route::post('preferences/update', [AmjitK\GlobalNotification\Http\Controllers\UserPreferenceController::class, 'update'])->name('global-notification.preferences.update');
+
+    // In-App Widgets
+    Route::get('notifications/latest-unread', [AmjitK\GlobalNotification\Http\Controllers\NotificationInAppController::class, 'latestUnread'])->name('global-notification.in-app.latest');
 });
